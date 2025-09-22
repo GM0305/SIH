@@ -1,0 +1,209 @@
+/* ---------------------------------- */
+/* 1. Global Test Container & Layout */
+/* ---------------------------------- */
+.test-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: 30px 20px 80px; /* Padding for fixed elements */
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* ---------------------------------- */
+/* 2. Status Bar (Fixed Position for Visibility) */
+/* ---------------------------------- */
+.test-status-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 15px 40px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    border-bottom: 2px solid #e9ecef;
+}
+
+.status-item {
+    font-size: 1.1em;
+    font-weight: 600;
+    color: #343a40;
+}
+
+.timer-info span {
+    margin-left: 8px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background-color: #e9ecef;
+    font-family: monospace;
+}
+
+.time-normal {
+    color: #007bff; /* Blue for normal time */
+}
+
+.time-danger {
+    color: #dc3545; /* Red for low time */
+    animation: flash-red 1s infinite alternate;
+}
+
+@keyframes flash-red {
+    from { opacity: 1; }
+    to { opacity: 0.7; }
+}
+
+/* ---------------------------------- */
+/* 3. Question Card (Main Content) */
+/* ---------------------------------- */
+.question-card {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 800px;
+    margin-top: 100px; /* Space for fixed status bar */
+    margin-bottom: 20px;
+}
+
+.question-text {
+    color: #1d2630;
+    font-size: 1.5em;
+    font-weight: 600;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #f8f9fa;
+    padding-bottom: 15px;
+}
+
+/* ---------------------------------- */
+/* 4. Options Styling */
+/* ---------------------------------- */
+.option-label {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    margin-bottom: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s;
+    font-size: 1.1em;
+}
+
+.option-label:hover {
+    background-color: #f1f3f5;
+    border-color: #adb5bd;
+}
+
+.option-radio {
+    /* Hide default radio button */
+    display: none;
+}
+
+/* Style when radio is selected (using sibling selector) */
+.option-radio:checked + .option-text {
+    color: #ffffff;
+    background-color: #007bff; /* Primary Blue accent for selection */
+    padding: 10px 15px;
+    border-radius: 6px;
+}
+
+.option-radio:checked {
+    /* Style the parent label when selected */
+    border-color: #007bff;
+    background-color: #e6f0ff;
+}
+
+.option-text {
+    margin-left: 10px;
+    transition: all 0.2s;
+}
+
+/* ---------------------------------- */
+/* 5. Reasoning Area (Consistent Input Style) */
+/* ---------------------------------- */
+.reasoning-group {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px dashed #ced4da;
+}
+
+.reasoning-label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: #495057;
+}
+
+.reasoning-textarea {
+    width: 100%;
+    min-height: 120px;
+    padding: 12px;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 1.0em;
+    resize: vertical;
+    transition: border-color 0.2s;
+}
+
+.reasoning-textarea:focus {
+    border-color: #6f42c1; /* Purple focus accent */
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(111, 66, 193, 0.25);
+}
+
+/* ---------------------------------- */
+/* 6. Navigation Buttons */
+/* ---------------------------------- */
+.test-navigation {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 800px;
+    padding: 20px 0;
+}
+
+.nav-btn {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+/* Navigation (Prev/Next) buttons - Secondary Style */
+.nav-btn:not(.submit-btn) {
+    background-color: #e9ecef;
+    color: #343a40;
+}
+
+.nav-btn:not(.submit-btn):hover {
+    background-color: #ced4da;
+    transform: translateY(-1px);
+}
+
+.nav-btn:disabled {
+    background-color: #e9ecef;
+    color: #adb5bd;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Submit button - Primary/Register Style (Purple Accent) */
+.submit-btn {
+    background-color: #6f42c1; /* Purple Accent */
+    color: white;
+}
+
+.submit-btn:hover {
+    background-color: #5936a8;
+    transform: translateY(-2px);
+}

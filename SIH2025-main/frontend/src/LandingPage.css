@@ -1,0 +1,204 @@
+/* ---------------------------------- */
+/* 1. Page & Container Styles */
+/* ---------------------------------- */
+.landing-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f8f9fa; /* Consistent light gray background */
+    font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+    color: #333;
+    padding-top: 80px; /* Space for the fixed navbar */
+}
+
+/* ---------------------------------- */
+/* 2. Navbar Styling */
+/* ---------------------------------- */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    padding: 15px 40px;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    border-bottom: 2px solid #e9ecef;
+}
+
+.navbar-left,
+.navbar-right {
+    display: flex;
+    align-items: center;
+}
+
+.logo-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1.5em;
+    font-weight: 700;
+}
+
+.logo-icon {
+    background-color: #6f42c1; /* Purple accent */
+    color: white;
+    padding: 4px 8px;
+    border-radius: 6px;
+}
+
+.logo-text {
+    color: #343a40;
+}
+
+.register-btn {
+    padding: 8px 16px;
+    background-color: #6f42c1;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.register-btn:hover {
+    background-color: #5936a8;
+    transform: translateY(-2px);
+}
+
+/* ---------------------------------- */
+/* 3. Hero Section Styling */
+/* ---------------------------------- */
+.hero-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 80px 20px;
+    max-width: 800px;
+}
+
+.hero-title {
+    font-size: 3.5em;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+.highlight {
+    color: #6f42c1; /* Purple accent */
+}
+
+.app-name {
+    color: #007bff; /* Blue accent */
+}
+
+.hero-subtitle {
+    font-size: 1.2em;
+    color: #6c757d;
+    margin-bottom: 30px;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap; /* Allows buttons to wrap on small screens */
+    justify-content: center;
+}
+
+/* ---------------------------------- */
+/* 4. Button Styles (Consistent) */
+/* ---------------------------------- */
+.primary-btn,
+.secondary-btn {
+    padding: 14px 28px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.primary-btn {
+    background-color: #6f42c1; /* Purple accent for Get Started/Students */
+    color: white;
+}
+
+.primary-btn:hover {
+    background-color: #5936a8;
+    transform: translateY(-2px);
+}
+
+.secondary-btn {
+    background-color: #007bff; /* Blue accent for Login/Teachers */
+    color: white;
+}
+
+.secondary-btn:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+/* ---------------------------------- */
+/* 5. Features Section Styling */
+/* ---------------------------------- */
+.features-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px;
+    padding: 50px 20px;
+    max-width: 900px;
+}
+
+.feature-card {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 250px;
+    min-width: 200px;
+    transition: transform 0.2s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+}
+
+.feature-icon {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 15px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2em;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.feature-icon-study {
+    background-color: #fce4ec; /* Light pink background */
+}
+.feature-icon-easy {
+    background-color: #fff3e0; /* Light orange background */
+}
+.feature-icon-fun {
+    background-color: #e8f5e9; /* Light green background */
+}
+
+.feature-card h3 {
+    font-size: 1.2em;
+    font-weight: 600;
+    color: #1d2630;
+    margin-bottom: 5px;
+}

@@ -1,0 +1,107 @@
+/* ---------------------------------- */
+/* 1. Page Container (Consistent Background) */
+/* ---------------------------------- */
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Center the card on the screen */
+    padding: 40px 20px;
+    min-height: 100vh;
+    background-color: #f8f9fa; /* Very light gray background */
+    font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+    color: #333;
+}
+
+/* ---------------------------------- */
+/* 2. Form Card (Consistent Card Design) */
+/* ---------------------------------- */
+.login-form {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 10px; /* Consistent rounded corners */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); /* Soft, pronounced shadow */
+    width: 100%;
+    max-width: 450px;
+    margin-top: -50px; /* Pull it up slightly for better centering */
+    text-align: center;
+}
+
+.login-form h2 {
+    color: #343a40; /* Darker grey for headings */
+    margin-bottom: 30px;
+    font-size: 2em;
+    font-weight: 700;
+}
+
+/* ---------------------------------- */
+/* 3. Input Styles (Consistent Fields) */
+/* ---------------------------------- */
+.form-control {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ced4da;
+    border-radius: 8px; /* Consistent rounded inputs */
+    box-sizing: border-box;
+    font-size: 1.05em;
+    transition: all 0.2s ease-in-out;
+}
+
+.form-control:focus {
+    border-color: #007bff; /* Primary blue border on focus for Teacher pages */
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25); /* Blue glow */
+}
+
+/* ---------------------------------- */
+/* 4. Button Styles (Consistent Primary Button - Blue) */
+/* ---------------------------------- */
+.submit-btn {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.15em;
+    font-weight: 600;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    letter-spacing: 0.5px;
+}
+
+.primary-btn {
+    background-color: #007bff; /* Primary blue for Teacher Login/Dashboard actions */
+    color: white;
+}
+
+.primary-btn:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+    transform: translateY(-2px);
+}
+
+.primary-btn:active {
+    background-color: #004085;
+    transform: translateY(0);
+}
+
+/* ---------------------------------- */
+/* 5. Register Prompt and Link Styling */
+/* ---------------------------------- */
+.register-prompt {
+    font-size: 1.0em;
+    color: #6c757d;
+    margin-top: 30px;
+    text-align: center;
+}
+
+.register-prompt a {
+    color: #6f42c1; /* Consistent purple accent for the Register link */
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.register-prompt a:hover {
+    color: #5936a8;
+    text-decoration: underline;
+}

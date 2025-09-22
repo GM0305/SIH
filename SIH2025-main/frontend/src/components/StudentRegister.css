@@ -1,0 +1,74 @@
+/* General Body/Container Styling */
+.student-register-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; /* Align to top to match reference */
+    padding: 40px 20px; /* More padding top/bottom */
+    min-height: 100vh;
+    background-color: #f8f9fa; /* Very light gray background */
+    font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif; /* Modern font stack */
+    color: #333;
+}
+
+/* Form Card Styling */
+.student-register-form {
+    background-color: #ffffff;
+    padding: 40px; /* Generous padding */
+    border-radius: 10px; /* Consistent rounded corners */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); /* Soft, pronounced shadow */
+    width: 100%;
+    max-width: 450px; /* Slightly wider forms */
+    margin-top: 80px; /* Push down from the top, assuming a navbar is above */
+    text-align: center;
+}
+
+.student-register-form h2 {
+    color: #343a40; /* Darker grey for headings */
+    margin-bottom: 30px; /* More space below heading */
+    font-size: 2em; /* Larger heading */
+    font-weight: 700;
+}
+
+/* Input Fields Styling */
+.student-register-form input {
+    width: calc(100% - 24px); /* Account for padding */
+    padding: 12px;
+    margin-bottom: 20px; /* More space between inputs */
+    border: 1px solid #ced4da; /* Light gray border */
+    border-radius: 8px; /* Slightly more rounded inputs */
+    box-sizing: border-box;
+    font-size: 1.05em;
+    transition: all 0.2s ease-in-out;
+}
+
+.student-register-form input:focus {
+    border-color: #6f42c1; /* Accent purple border on focus */
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(111, 66, 193, 0.25); /* Purple glow */
+}
+
+/* Button Styling (Register Button) */
+.student-register-form button[type="submit"] {
+    width: 100%;
+    padding: 14px; /* Larger button */
+    background-color: #6f42c1; /* Strong accent purple */
+    color: white;
+    border: none;
+    border-radius: 8px; /* Rounded button corners */
+    cursor: pointer;
+    font-size: 1.15em; /* Larger font */
+    font-weight: 600;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    letter-spacing: 0.5px;
+}
+
+.student-register-form button[type="submit"]:hover {
+    background-color: #5936a8; /* Slightly darker purple on hover */
+    transform: translateY(-2px); /* Subtle lift */
+}
+
+.student-register-form button[type="submit"]:active {
+    background-color: #4c2d8c;
+    transform: translateY(0);
+}
