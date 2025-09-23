@@ -120,3 +120,13 @@
     margin-top: 20px;
     width: 200px; /* Consistent width for the log out button */
 }
+
+/* Placeholder for loading state */
+.loading-state {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  font-size: 1.5rem;
+  color: #6c757d;
+}

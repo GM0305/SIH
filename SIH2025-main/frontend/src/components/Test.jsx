@@ -154,6 +154,32 @@ export default function Test({ session }) {
           Submit Test
         </button>
       </div>
+
+      {/* Progress Section */}
+<div className="progress-section">
+  {/* Progress Bar */}
+  <div className="progress-bar">
+    <div
+      className="progress-fill"
+      style={{ width: `${((currentQ + 1) / questions.length) * 100}%` }}
+    ></div>
+  </div>
+
+  {/* Progress Dots */}
+  <div className="progress-dots">
+    {questions.map((_, idx) => (
+      <button
+        key={idx}
+        className={`progress-dot ${
+          idx === currentQ ? "active-dot" : answers[idx].selectedIndex !== null ? "answered-dot" : ""
+        }`}
+        onClick={() => setCurrentQ(idx)}
+      ></button>
+    ))}
+  </div>
+</div>
+
+
     </section>
   );
 
