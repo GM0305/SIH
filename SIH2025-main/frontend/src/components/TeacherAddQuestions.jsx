@@ -1,12 +1,17 @@
 import React, { useState } from "react";
+import { Link } from 'react-router-dom';
+import { ArrowLeft, CheckCircle, XCircle } from 'lucide-react';
 import "./TeacherAddQuestions.css"; 
 
 const API_URL = "http://127.0.0.1:8000";
 
-export default function TeacherDashboard() {
+export default function TeacherAddQuestions() {
   const [text, setText] = useState("");
   const [options, setOptions] = useState(["", "", "", ""]);
   const [correct, setCorrect] = useState(0);
+  const [message, setMessage] = useState(null);
+  // Added a placeholder quiz ID to match the backend model
+  const [quizId, setQuizId] = useState("test_quiz_id"); 
 
   const handleOptionChange = (idx, value) => {
     const copy = [...options];
@@ -16,38 +21,53 @@ export default function TeacherDashboard() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setMessage(null); // Clear previous messages
     try {
       const res = await fetch(`${API_URL}/addQuestion`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text, options, correct }),
+        // Added the quizId to the request body
+        body: JSON.stringify({ quiz_id: quizId, text, options, correct }),
       });
       const data = await res.json();
-      alert(data.message);
+      setMessage({ type: 'success', text: data.message });
+      
       // Reset form
       setText("");
       setOptions(["", "", "", ""]);
       setCorrect(0);
     } catch (err) {
-      alert("Error adding question");
+      setMessage({ type: 'error', text: "Error adding question. Please try again." });
       console.error(err);
     }
   };
 
   return (
-    // Use consistent class names for the container and remove inline styles
     <div className="dashboard-container"> 
-      <div className="form-card"> {/* Renamed from 'card' for consistency */}
-        <h2 className="card-title">Teacher Dashboard — Add Question</h2> {/* Updated class */}
+      <div className="form-card">
+        <div className="form-header">
+          <Link to="/teacher" className="go-back-btn">
+            <ArrowLeft className="icon-sm" />
+            <span>Go to Dashboard</span>
+          </Link>
+          <h2 className="card-title">Add New Question</h2>
+        </div>
+
+        {message && (
+          <div className={`message-box ${message.type}`}>
+            {message.type === 'success' ? <CheckCircle className="message-icon" /> : <XCircle className="message-icon" />}
+            <p>{message.text}</p>
+          </div>
+        )}
 
         <form onSubmit={handleSubmit}>
-          <div className="form-group"> {/* Class for input/label grouping */}
+          <div className="form-group">
             <label className="form-label">Question Text:</label>
             <textarea
               value={text}
               onChange={(e) => setText(e.target.value)}
               required
-              className="form-control" // Class for inputs/textareas
+              className="form-control"
             />
           </div>
 
@@ -59,7 +79,7 @@ export default function TeacherDashboard() {
                 value={opt}
                 onChange={(e) => handleOptionChange(i, e.target.value)}
                 required
-                className="form-control" // Class for inputs
+                className="form-control"
               />
             </div>
           ))}
@@ -69,7 +89,7 @@ export default function TeacherDashboard() {
             <select 
               value={correct} 
               onChange={(e) => setCorrect(Number(e.target.value))}
-              className="form-select" // Class for the select box
+              className="form-select"
             >
               {options.map((_, i) => (
                 <option key={i} value={i}>
@@ -79,7 +99,7 @@ export default function TeacherDashboard() {
             </select>
           </div>
 
-          <button type="submit" className="submit-btn primary-btn"> {/* Consistent button classes */}
+          <button type="submit" className="submit-btn primary-btn">
             Add Question
           </button>
         </form>

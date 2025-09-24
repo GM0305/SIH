@@ -6,36 +6,66 @@ import "./StudentLogin.css";
 const API_URL = "http://127.0.0.1:8000";
 
 export default function StudentLogin({ onLogin }) {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  async function handleLogin(e) {
+  const handleLogin = async (e) => {
     e.preventDefault();
+    setError("");
+
+    // Simple client-side email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setError("Please enter a valid email address.");
+      return;
+    }
+
+    // Client-side password length validation
+    if (password.length < 8) {
+      setError("Password must be at least 8 characters long.");
+      return;
+    }
+
     try {
       const res = await axios.post(`${API_URL}/studentLogin/`, {
-        username,
+        username: email, // Use 'email' for the backend
         password,
       });
       onLogin(res.data);
       navigate("/student-dashboard");
     } catch (err) {
-      alert("Invalid student login");
+      setError("Invalid email or password.");
     }
-  }
+  };
 
   return (
-  <div className="login-container"> {/* Main page container */}
-   <form onSubmit={handleLogin} className="login-form"> {/* Form card container */}
-      <h2>Student Login</h2>
-        <input value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Username" />
-         <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Password" />
-         <button type="submit">Login</button>
-         </form>
-         <p className="register-prompt"> {/* Link prompt container */}
-         Don't have an account?{" "}
-         <Link to="/studentRegister">Register here</Link>
-      </p> 
-  </div>
- );
+    <div className="login-container">
+      <form onSubmit={handleLogin} className="login-form">
+        <h2>Student Login</h2>
+        {error && <p className="error-message">{error}</p>}
+        <input 
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Email Address"
+          required
+        />
+        <input 
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Password"
+          required
+          minLength="8"
+        />
+        <button type="submit">Login</button>
+      </form>
+      <p className="register-prompt">
+        Don't have an account?{" "}
+        <Link to="/studentRegister">Register here</Link>
+      </p>
+    </div>
+  );
 }

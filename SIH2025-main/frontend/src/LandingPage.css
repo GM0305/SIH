@@ -44,11 +44,11 @@
     font-weight: 700;
 }
 
+
 .logo-icon {
-    background-color: #6f42c1; /* Purple accent */
-    color: white;
-    padding: 4px 8px;
-    border-radius: 6px;
+  width: 70px; /* Adjust as needed */
+  height: auto;
+  /* Removed properties like background-color, padding, and border-radius */
 }
 
 .logo-text {
@@ -115,7 +115,15 @@
 /* ---------------------------------- */
 /* 4. Button Styles (Consistent) */
 /* ---------------------------------- */
-.primary-btn,
+.primary-btn{
+    padding: 14px 28px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
 .secondary-btn {
     padding: 14px 28px;
     border: none;
@@ -127,7 +135,7 @@
 }
 
 .primary-btn {
-    background-color: #6f42c1; /* Purple accent for Get Started/Students */
+    background-color: #5936a8; /* Purple accent for Get Started/Students */
     color: white;
 }
 
@@ -137,12 +145,12 @@
 }
 
 .secondary-btn {
-    background-color: #007bff; /* Blue accent for Login/Teachers */
+    background-color: #5936a8; /* Purple accent for Get Started/Students */
     color: white;
 }
 
 .secondary-btn:hover {
-    background-color: #0056b3;
+    background-color: #5936a8;
     transform: translateY(-2px);
 }
 

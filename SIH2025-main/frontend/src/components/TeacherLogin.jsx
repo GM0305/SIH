@@ -2,50 +2,65 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import "./TeacherLogin.css";
+
 const API_URL = "http://127.0.0.1:8000";
 
 export default function TeacherLogin({ onLogin }) {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  async function handleLogin(e) {
+  const handleLogin = async (e) => {
     e.preventDefault();
+    setError("");
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setError("Please enter a valid email address.");
+      return;
+    }
+
+    if (password.length < 8) {
+      setError("Password must be at least 8 characters long.");
+      return;
+    }
+
     try {
       const res = await axios.post(`${API_URL}/teacherLogin/`, {
-        username,
+        username: email,
         password,
       });
       onLogin(res.data);
       navigate("/teacher");
     } catch (err) {
-      alert("Invalid teacher login");
+      setError("Invalid email or password.");
     }
-  }
+  };
 
   return (
-    // Use consistent class names for the container and card
-    <div className="login-container"> 
-      <form onSubmit={handleLogin} className="login-form"> 
+    <div className="login-container">
+      <form onSubmit={handleLogin} className="login-form">
         <h2>Teacher Login</h2>
+        {error && <p className="error-message">{error}</p>}
         <input
-          className="form-control" // Added for consistent input styling
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          placeholder="Username"
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Email Address"
+          required
         />
         <input
-          className="form-control" // Added for consistent input styling
+          type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          type="password"
           placeholder="Password"
+          required
+          minLength="8"
         />
-        <button type="submit" className="submit-btn primary-btn">
-          Login
-        </button>
+        <button type="submit">Login</button>
       </form>
-      <p className="register-prompt"> {/* Class for the link prompt */}
+      <p className="register-prompt">
         Don’t have an account?{" "}
         <Link to="/teacherRegister">Register here</Link>
       </p>

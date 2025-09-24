@@ -39,24 +39,23 @@ export default function TestResults({ session }) {
 
   if (!result) {
     return (
-      <div className="no-results-container"> {/* New class for consistency */}
+      <div className="no-results-container">
         <p className="no-results-message">No test results found.</p>
         <button 
-            onClick={() => navigate("/")} 
-            className="submit-btn primary-btn" // Consistent button styling
+            onClick={() => navigate("/studentDashboard")} 
+            className="submit-btn primary-btn"
         >
-            Go Home
+            Go to Dashboard
         </button>
       </div>
     );
   }
 
   return (
-    <section className="results-container"> {/* Main page container */}
-      <div className="results-card"> {/* Main card container */}
+    <section className="results-container">
+      <div className="results-card">
         <h2 className="card-title">Test Results</h2>
         
-        {/* Score Summary Card */}
         <div className="score-summary-card">
             <p className="summary-score">
                 Score: <span className="score-value">{result.score}</span> / {result.questions.length*2}
@@ -66,8 +65,7 @@ export default function TestResults({ session }) {
 
         <h3 className="details-heading">Detailed Breakdown</h3>
 
-        {/* Detailed Table */}
-        <div className="table-responsive"> {/* Wrapper for horizontal scrolling on small screens */}
+        <div className="table-responsive">
             <table className="results-table">
                 <thead>
                     <tr>
@@ -77,7 +75,7 @@ export default function TestResults({ session }) {
                         <th>Correct Answer</th>
                         <th>AI Verdict</th>
                         <th>Your Reasoning</th>
-                        <th>Score</th> {/* Updated to "Score" to match the column data */}
+                        <th>Score</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -97,10 +95,10 @@ export default function TestResults({ session }) {
         </div>
         
         <button 
-            onClick={() => navigate("/")} 
-            className="submit-btn register-btn back-home-btn" // Register btn style (purple) for secondary action
+            onClick={() => navigate("/student-dashboard")} 
+            className="submit-btn register-btn back-home-btn"
         >
-            Back to Home
+            Go to Dashboard
         </button>
       </div>
     </section>

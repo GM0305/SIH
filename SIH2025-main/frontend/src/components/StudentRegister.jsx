@@ -6,39 +6,58 @@ import "./StudentRegister.css";
 const API_URL = "http://127.0.0.1:8000";
 
 export default function StudentRegister({ onLogin }) {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  async function handleLogin(e) {
+  const handleRegister = async (e) => {
     e.preventDefault();
+    setError("");
+
+    // Simple client-side email and password validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setError("Please enter a valid email address.");
+      return;
+    }
+
+    if (password.length < 8) {
+      setError("Password must be at least 8 characters long.");
+      return;
+    }
+
     try {
       const res = await axios.post(`${API_URL}/studentRegister/`, {
-        username,
+        username: email, // Use 'email' for the backend
         password,
       });
       //onLogin(res.data);
       navigate("/studentLogin");
     } catch (err) {
-      alert("Student Already exists...");
+      setError("This email is already registered. Please login or use a different email.");
     }
-  }
+  };
 
   return (
-    <div className="student-register-container"> 
-      {/* Applied class for the form card */}
-      <form onSubmit={handleLogin} className="student-register-form"> 
+    <div className="student-register-container">
+      <form onSubmit={handleRegister} className="student-register-form">
         <h2>Student Register</h2>
-        <input 
-          value={username} 
-          onChange={(e) => setUsername(e.target.value)} 
-          placeholder="Username" 
+        {error && <p className="error-message">{error}</p>}
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Email Address"
+          required
         />
-        <input 
-          value={password} 
-          onChange={(e) => setPassword(e.target.value)} 
-          type="password" 
-          placeholder="Password" 
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Password"
+          required
+          minLength="8"
         />
         <button type="submit">Register</button>
       </form>

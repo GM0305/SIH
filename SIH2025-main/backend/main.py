@@ -3,9 +3,12 @@ from fastapi.middleware.cors import CORSMiddleware
 from pymongo import MongoClient
 import certifi
 import google.generativeai as genai
+from pydantic import BaseModel
 from dotenv import load_dotenv
 import os
 from pydantic import BaseModel
+from datetime import datetime
+from bson import ObjectId
 from typing import Optional
 
 load_dotenv()
@@ -46,6 +49,7 @@ except Exception as e:
     raise
 
 class Question(BaseModel):
+    quiz_id: str
     text: str
     options: list[str]
     correct: int

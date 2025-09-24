@@ -13,6 +13,14 @@ export default function Test({ session }) {
   const [currentQ, setCurrentQ] = useState(0);
   const timerRef = useRef(null);
 
+  // State for the custom pop-up modal
+  const [popup, setPopup] = useState({
+    show: false,
+    message: "",
+    isSubmitting: false,
+    onConfirm: null,
+  });
+
   // Fetch questions from backend
   useEffect(() => {
     async function fetchQuestions() {
@@ -54,45 +62,117 @@ export default function Test({ session }) {
     setAnswers(copy);
   }
 
-  function handleSubmit(auto = false) {
-    if (!auto && !window.confirm("Submit the test now?")) return;
-
-    clearInterval(timerRef.current);
-
-    // Save result to backend
-    fetch(`${API_URL}/submitTest`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        username: session.username,
-        answers,
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("Test submitted, backend result:", data);
-        // Redirect to /testresults with data
-        navigate("/testresults");
-      })
-      .catch((err) => {
-        console.error("Error submitting test:", err);
-        alert("Error submitting test");
+  const submitTest = async () => {
+    setPopup({
+      show: true,
+      message: "Submitting test. Please do not close this window.",
+      isSubmitting: true,
+    });
+    try {
+      const res = await fetch(`${API_URL}/submitTest`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username: session.username,
+          answers,
+        }),
       });
-  }
+      const data = await res.json();
+      console.log("Test submitted, backend result:", data);
+      navigate("/testresults");
+    } catch (err) {
+      console.error("Error submitting test:", err);
+      setPopup({
+        show: true,
+        message: "Error submitting test. Please try again.",
+        isSubmitting: false,
+      });
+    }
+  };
+
+  const handleSubmit = (auto = false) => {
+    if (auto) {
+      submitTest();
+      return;
+    }
+
+    setPopup({
+      show: true,
+      message: "Are you sure you want to submit the test?",
+      isSubmitting: false,
+      onConfirm: submitTest,
+    });
+  };
 
   if (questions.length === 0) return <div className="loading-state">Loading questions...</div>;
 
   const q = questions[currentQ];
 
   return (
-    // Main container
     <section className="test-container">
-      
-      {/* Header/Status Bar */}
+      {popup.show && (
+        <div className="modal-overlay">
+          <div className="modal-container">
+            <p className="modal-message">{popup.message}</p>
+            {!popup.isSubmitting && (
+              <div className="modal-actions">
+                {popup.onConfirm && (
+                  <>
+                    <button
+                      onClick={() => {
+                        setPopup({ show: false, message: "" });
+                        popup.onConfirm();
+                      }}
+                      className="modal-btn modal-confirm-btn"
+                    >
+                      Yes, Submit
+                    </button>
+                    <button
+                      onClick={() => setPopup({ show: false, message: "" })}
+                      className="modal-btn modal-cancel-btn"
+                    >
+                      Cancel
+                    </button>
+                  </>
+                )}
+                {!popup.onConfirm && (
+                  <button
+                    onClick={() => setPopup({ show: false, message: "" })}
+                    className="modal-btn modal-confirm-btn"
+                  >
+                    OK
+                  </button>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      <div className="progress-section">
+        <div className="progress-bar">
+          <div
+            className="progress-fill"
+            style={{ width: `${((currentQ + 1) / questions.length) * 100}%` }}
+          ></div>
+        </div>
+        <div className="progress-dots">
+          {questions.map((_, idx) => (
+            <button
+              key={idx}
+              className={`progress-dot ${
+                idx === currentQ ? "active-dot" : answers[idx].selectedIndex !== null ? "answered-dot" : ""
+              }`}
+              onClick={() => setCurrentQ(idx)}
+            ></button>
+          ))}
+        </div>
+      </div>
+
       <div className="test-status-bar">
         <p className="status-item user-info">{session.username}</p>
         <p className="status-item timer-info">
-          Time left: 
+          Time left:
           <span className={remaining < 300 ? "time-danger" : "time-normal"}>
             {formatTime(remaining)}
           </span>
@@ -100,7 +180,6 @@ export default function Test({ session }) {
         <p className="status-item question-counter">Q {currentQ + 1} / {questions.length}</p>
       </div>
 
-      {/* Question Card */}
       <div className="question-card">
         <h3 className="question-text">{q.text}</h3>
         
@@ -121,9 +200,9 @@ export default function Test({ session }) {
         </div>
 
         <div className="reasoning-group">
-          <label className="reasoning-label">Your Reasoning (Optional):</label>
+          <label className="reasoning-label">Your Reasoning :</label>
           <textarea
-            placeholder="Explain your choice here (optional)"
+            placeholder="Explain your choice here "
             value={answers[currentQ].reasoning}
             onChange={(e) => updateReason(currentQ, e.target.value)}
             className="reasoning-textarea form-control"
@@ -131,7 +210,6 @@ export default function Test({ session }) {
         </div>
       </div>
 
-      {/* Navigation and Submission Buttons */}
       <div className="test-navigation">
         <button 
           onClick={() => setCurrentQ((c) => Math.max(0, c - 1))}
@@ -149,41 +227,15 @@ export default function Test({ session }) {
         </button>
         <button 
           onClick={() => handleSubmit(false)}
-          className="nav-btn submit-btn register-btn" // Register btn style is purple accent
+          className="nav-btn submit-btn register-btn"
         >
           Submit Test
         </button>
       </div>
-
-      {/* Progress Section */}
-<div className="progress-section">
-  {/* Progress Bar */}
-  <div className="progress-bar">
-    <div
-      className="progress-fill"
-      style={{ width: `${((currentQ + 1) / questions.length) * 100}%` }}
-    ></div>
-  </div>
-
-  {/* Progress Dots */}
-  <div className="progress-dots">
-    {questions.map((_, idx) => (
-      <button
-        key={idx}
-        className={`progress-dot ${
-          idx === currentQ ? "active-dot" : answers[idx].selectedIndex !== null ? "answered-dot" : ""
-        }`}
-        onClick={() => setCurrentQ(idx)}
-      ></button>
-    ))}
-  </div>
-</div>
-
-
     </section>
   );
 
-  function formatTime(s) { /* Note: Function should be defined outside return */
+  function formatTime(s) {
     const mm = String(Math.floor(s / 60)).padStart(2, "0");
     const ss = String(s % 60).padStart(2, "0");
     return `${mm}:${ss}`;

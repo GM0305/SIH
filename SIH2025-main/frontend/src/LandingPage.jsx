@@ -11,8 +11,8 @@ export default function LandingPage() {
       <nav className="navbar">
         <div className="navbar-left">
           <div className="logo-box">
-            <span className="logo-icon">N</span>
-            <span className="logo-text">Nexus</span>
+            <img src="/src/logo.png" alt="TestApp Logo" className="logo-icon" />
+            <span className="logo-text">MindGrade</span>
           </div>
         </div>
         <div className="navbar-right">
